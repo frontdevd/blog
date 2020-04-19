@@ -1,0 +1,59 @@
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <h2>Login in admin dashboard</h2>
+
+  <div class="alert alert-danger" *ngIf="auth.error$ | async as error">
+    {{error}}
+  </div>
+
+  <div class="alert alert-info" *ngIf="message">
+    {{message}}
+  </div>
+
+  <div
+    [ngClass]="{invalid: form.get('email').touched && form.get('email').invalid}"
+    class="form-control">
+    <label for="email">email</label>
+    <input type="email" id="email" formControlName="email">
+    <div
+      *ngIf="form.get('email').touched && form.get('email').invalid"
+      class="validation">
+      <small *ngIf="form.get('email').errors.required">
+        write email
+      </small>
+
+      <small *ngIf="form.get('email').errors.email">
+        correct email
+      </small>
+    </div>
+  </div>
+
+  <div
+    [ngClass]="{invalid: form.get('password').touched && form.get('password').invalid}"
+
+    class="form-control">
+    <label for="password">password</label>
+    <input type="password" id="password" formControlName="password">
+    <div
+      *ngIf="form.get('password').touched && form.get('password').invalid"
+      class="validation">
+      <small *ngIf="form.get('password').errors.required">
+          correct password
+      </small>
+
+      <small *ngIf="form.get('password').errors.minlength">
+        password must be more
+        {{form.get('password').errors.minlength.requiredLength}} simbols,
+        now {{form.get('password').errors.minlength.actualLength}} simbols!
+      </small>
+    </div>
+  </div>
+
+  <button
+    [disabled]="form.invalid || submitted"
+    type="submit"
+    class="btn btn-primary">login
+  </button>
+
+
+
+</form>
